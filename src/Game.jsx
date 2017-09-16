@@ -39,6 +39,16 @@ export class Game extends Component {
     }
   };
 
+  deselectDot = (x, y) => () => {
+    const {selections: prevSelections} = this.state;
+    const index = prevSelections.findIndex(([x1, y1]) => x1 === x && y1 === y);
+    const selections = [...prevSelections];
+    selections.splice(index, 1);
+    this.setState({
+      selections
+    });
+  }
+
   selectSquare = index => {
     const { selectedSquare } = this.state;
     if (selectedSquare === index) {
@@ -96,7 +106,7 @@ export class Game extends Component {
                 'dot-available': !selected && !used
               }) }
 
-              onClick={ selected ? () => {} : this.selectDot(x, y) }
+              onClick={ selected ? this.deselectDot(x, y) : this.selectDot(x, y) }
               key={ `point-${x}-${y}` }
             />
           );
