@@ -15,6 +15,16 @@ export class Game extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.grid !== nextProps.grid) {
+      this.setState({
+        squares: [],
+        selections: [],
+        selectedSquare: undefined
+      });
+    }
+  }
+
   selectDot = (x, y) => () => {
     const {selections: prevSelections, squares} = this.state;
     const selections = [...prevSelections, [x, y]];

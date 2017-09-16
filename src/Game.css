@@ -7,6 +7,7 @@
 .dot {
     fill: none;
     r: 0.1;
+    transition: fill 100ms linear;
 }
 
 .dot-available {
@@ -26,6 +27,7 @@
     fill: none;
     stroke-width: 0.1;
     stroke: lavender;
+    transition: stroke-width 100ms linear;
 }
 
 .square:hover {
