@@ -67,12 +67,10 @@ export class Game extends Component {
         });
       }
     } else if (evt.keyCode === 27) {
-      // Clear selected square / dots
       this.setState({
         selectedSquare: undefined,
         selections: []
       });
-      console.log("Clear");
     }
   }
 
