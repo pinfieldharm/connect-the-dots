@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="App">
         <select value={ gridIndex } onChange={ this.changeGrid }>
-          { grids.map( (g, index) => <option key={index} value={index}>{ index }</option>)}
+          { grids.map( (g, index) => <option key={index} value={index}>{ index + 1 }</option>)}
         </select>
         <div className="App__grid">
           <Game grid={ parseGrid(gridIndex) }/>
