@@ -1,22 +1,10 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
+import { isSquare } from './geometry';
 
 import './Game.css';
 
-const d2 = ([x1, y1], [x2, y2]) => {
-  return (x2 - x1)**2 + (y2 - y1)**2;
-};
-
-const isSquare = ([p1, p2, p3, p4]) => {
-  const d13 = d2(p1, p3);
-  const d24 = d2(p2, p4);
-  const d12 = d2(p1, p2);
-  const d23 = d2(p2, p3);
-  const d34 = d2(p3, p4);
-  const d41 = d2(p4, p1);
-
-  return (d13 === d24 && d12 === d34 && d23 === d41 && d12 === d23);
-};
+const pointString = points => points.map(([x, y]) => `${x},${y}`).join(" ")
 
 export class Game extends Component {
   constructor(props) {
@@ -34,22 +22,42 @@ export class Game extends Component {
       if (isSquare(selections)) {
         this.setState({
           selections: [],
-          squares: [...squares, selections]
+          squares: [...squares, selections],
+          selectedSquare: undefined
         });
       } else {
         this.setState({
-          selections: []
+          selections: [],
+          selectedSquare: undefined
         });
       }
     } else {
-      this.setState({selections});
+      this.setState({
+        selections,
+        selectedSquare: undefined
+      });
+    }
+  };
+
+  selectSquare = index => {
+    const { selectedSquare } = this.state;
+    if (selectedSquare === index) {
+      this.setState({
+        selectedSquare: undefined,
+        selections: []
+      });
+    } else {
+      this.setState({
+        selectedSquare: index,
+        selections: []
+      })
     }
   };
 
 
   render() {
     const {grid} = this.props;
-    const {squares, selections} = this.state;
+    const {squares, selections, selectedSquare} = this.state;
     const points = [];
 
     for (let y = 0; y < grid.length; y++) {
@@ -67,7 +75,7 @@ export class Game extends Component {
                 'dot-selected': selected,
                 'dot-available': !selected && !used
               }) }
-              r={0.1}
+
               onClick={ selected ? () => {} : this.selectDot(x, y) }
               key={ `point-${x}-${y}` }
             />
@@ -80,18 +88,24 @@ export class Game extends Component {
     const squareBoxes = squares.map((points, i) => {
       return (
         <polygon
-          points={ points.map(([x, y]) => `${x},${y}`).join(" ") }
+          className={ cx("square", { "square-selected": selectedSquare === i })}
+          points={ pointString(points) }
           key={`square-${i}`}
-          fill="none"
-          strokeWidth="0.025"
-          stroke="red"
+          onClick={ () => this.selectSquare(i) }
         />
       )
     });
+
+    const inProgress = (
+      <polyline className="in-progress"
+                points={ pointString(selections) }/>
+    );
+
     return (
       <svg width="100%" height="100%" viewBox="-0.5 -0.5 6 6">
         { squareBoxes }
         { points }
+        { inProgress }
       </svg>
     )
   }

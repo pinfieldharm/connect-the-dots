@@ -1,6 +1,8 @@
 .dot {
     fill: none;
+    r: 0.1;
 }
+
 .dot-available {
     fill: black;
 }
@@ -11,4 +13,20 @@
 
 .dot-selected {
     fill: red;
+}
+
+.square {
+    fill: none;
+    stroke-width: 0.1;
+    stroke: red;
+}
+
+.square.square-selected {
+    stroke-width: 0.2;
+}
+
+.in-progress {
+    fill: none;
+    stroke: pink;
+    stroke-width: 0.025;
 }
