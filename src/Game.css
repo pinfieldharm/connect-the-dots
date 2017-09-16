@@ -1,0 +1,14 @@
+.dot {
+    fill: none;
+}
+.dot-available {
+    fill: black;
+}
+
+.dot-available:hover {
+    fill: pink;
+}
+
+.dot-selected {
+    fill: red;
+}
