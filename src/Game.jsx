@@ -89,7 +89,7 @@ export class Game extends Component {
       )
     });
     return (
-      <svg width="100%" viewBox="-0.5 -0.5 6 6">
+      <svg width="100%" height="100%" viewBox="-0.5 -0.5 6 6">
         { squareBoxes }
         { points }
       </svg>
