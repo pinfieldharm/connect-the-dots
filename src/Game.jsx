@@ -3,6 +3,21 @@ import cx from 'classnames';
 
 import './Game.css';
 
+const d2 = ([x1, y1], [x2, y2]) => {
+  return (x2 - x1)**2 + (y2 - y1)**2;
+};
+
+const isSquare = ([p1, p2, p3, p4]) => {
+  const d13 = d2(p1, p3);
+  const d24 = d2(p2, p4);
+  const d12 = d2(p1, p2);
+  const d23 = d2(p2, p3);
+  const d34 = d2(p3, p4);
+  const d41 = d2(p4, p1);
+
+  return (d13 === d24 && d12 === d34 && d23 === d41 && d12 === d23);
+};
+
 export class Game extends Component {
   constructor(props) {
     super(props);
@@ -16,10 +31,16 @@ export class Game extends Component {
     const {selections: prevSelections, squares} = this.state;
     const selections = [...prevSelections, [x, y]];
     if (selections.length === 4) {
-      this.setState({
-        selections: [],
-        squares: [...squares, selections]
-      });
+      if (isSquare(selections)) {
+        this.setState({
+          selections: [],
+          squares: [...squares, selections]
+        });
+      } else {
+        this.setState({
+          selections: []
+        });
+      }
     } else {
       this.setState({selections});
     }
