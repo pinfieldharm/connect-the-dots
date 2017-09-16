@@ -54,6 +54,28 @@ export class Game extends Component {
     }
   };
 
+  onKeyUp = evt => {
+
+    if (evt.keyCode === 8 || evt.keyCode === 46) {
+      const { selectedSquare, squares } = this.state;
+      if (selectedSquare !== undefined) {
+        const newSquares = [...squares];
+        newSquares.splice(selectedSquare, 1);
+        this.setState({
+          selectedSquare: undefined,
+          squares: newSquares
+        });
+      }
+    } else if (evt.keyCode === 27) {
+      // Clear selected square / dots
+      this.setState({
+        selectedSquare: undefined,
+        selections: []
+      });
+      console.log("Clear");
+    }
+  }
+
 
   render() {
     const {grid} = this.props;
@@ -102,11 +124,13 @@ export class Game extends Component {
     );
 
     return (
-      <svg width="100%" height="100%" viewBox="-0.5 -0.5 6 6">
-        { squareBoxes }
-        { points }
-        { inProgress }
-      </svg>
+      <div className="Game" tabIndex="0" onKeyUp={ this.onKeyUp }>
+        <svg width="100%" height="100%" viewBox="-0.5 -0.5 6 6">
+          { squareBoxes }
+          { points }
+          { inProgress }
+        </svg>
+      </div>
     )
   }
 }
