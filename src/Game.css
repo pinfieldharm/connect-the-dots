@@ -25,7 +25,7 @@
 .square {
     fill: none;
     stroke-width: 0.1;
-    stroke: red;
+    stroke: lavender;
 }
 
 .square:hover {
