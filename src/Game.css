@@ -26,7 +26,7 @@
 .square {
     fill: none;
     stroke-width: 0.1;
-    stroke: lavender;
+    stroke: purple;
     transition: stroke-width 100ms linear;
 }
 

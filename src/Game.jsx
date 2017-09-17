@@ -131,6 +131,7 @@ export class Game extends Component {
           className={ cx("square", { "square-selected": selectedSquare === i })}
           points={ pointString(points) }
           key={`square-${i}`}
+          style={{ strokeOpacity: (0.1 + 0.1 * i)}}
           onClick={ () => this.selectSquare(i) }
         />
       )
